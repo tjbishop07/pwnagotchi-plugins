@@ -8,13 +8,17 @@ import datetime
 import os
 import toml
 import yaml
-
+import json
 
 class Wardrive(plugins.Plugin):
     __author__ = '@tjbishop'
     __version__ = '1.0.0'
     __license__ = 'GPL3'
     __description__ = 'Wardriving plugin for pwnagotchi'
+
+    def __init__(self):
+        self.data = None
+        self.lock = Lock()
 
     def on_loaded(self):
         self.coordinates = None
@@ -49,22 +53,22 @@ class Wardrive(plugins.Plugin):
             ui.add_element('wardriver', LabeledValue(color=BLACK, label='', value='WARDRIV\'N',
                                                  position=pos2,
                                                  label_font=fonts.Small, text_font=fonts.Small))
-    def on_wifi_update(self, agent, access_points):
-        info = agent.session()
-        self.coordinates = info["gps"]
-        ui.set("wardriver", "GOT AP LIST")
-        for network in access_points:
-            signal_strength = network['rssi']
-            channel = network['channel']
-            logging.info("Network nearby on channel %d (rssi: %d)" % (channel, signal_strength))
-        # listToStr = ' '.join(map(str, access_points))
-        # logging.info("[Wardrive] wifi update called $s", listToStr)
+
+    def on_unfiltered_ap_list(self, agent, data):
+        with self.lock:
+            data = sorted(data, key=lambda k: k['mac'])
+            self.data = json.dumps(data)
 
     def on_ui_update(self, ui):
         now = datetime.datetime.now()
         time_rn = now.strftime(self.date_format + "\n%I:%M %p")
         # pos = self.coordinates
         # logging.info("[Wardrive]")
+        data = json.loads(data)
+        for ap_data in data:
+            name = ap_data['hostname'] or ap_data['vendor'] or ap_data['mac']
+            logging.info("[Wardrive] AP - %s" % name)
+
         if self.coordinates and all([
             # avoid 0.000... measurements
             self.coordinates["Latitude"], self.coordinates["Longitude"]
