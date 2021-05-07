@@ -46,10 +46,10 @@ class Wardrive(plugins.Plugin):
             ui.add_element('clock', LabeledValue(color=BLACK, label='', value='-/-/-\n-:--',
                                                  position=pos,
                                                  label_font=fonts.Small, text_font=fonts.Small))
-            ui.add_element('wardriver', LabeledValue(color=BLACK, label='', value='WARDRIVE ON',
+            ui.add_element('wardriver', LabeledValue(color=BLACK, label='', value='WARDRIV\'N',
                                                  position=pos2,
                                                  label_font=fonts.Small, text_font=fonts.Small))
-    def on_wifi_update(self, agent, access_points):
+    def on_unfiltered_ap_list(self, agent, access_points):
         info = agent.session()
         self.coordinates = info["gps"]
         ui.set("wardriver", "GOT AP LIST")
