@@ -53,4 +53,4 @@ class Wardrive(plugins.Plugin):
         now = datetime.datetime.now()
         time_rn = now.strftime(self.date_format + "\n%I:%M %p")
         pos = self.coordinates
-        ui.set('clock', time_rn)
+        ui.set('clock', pos)
