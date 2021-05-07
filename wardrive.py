@@ -54,9 +54,16 @@ class Wardrive(plugins.Plugin):
     def on_ui_update(self, ui):
         now = datetime.datetime.now()
         time_rn = now.strftime(self.date_format + "\n%I:%M %p")
-        pos = self.coordinates
-        logging.info("[Wardrive] pos: %s" % f"{self.coordinates['Altitude']:.1f}m ")
-        ui.set("latitude", f"{self.coordinates['Latitude']:.4f} ")
-        ui.set("longitude", f"{self.coordinates['Longitude']:.4f} ")
-        ui.set("altitude", f"{self.coordinates['Altitude']:.1f}m ")
+        # pos = self.coordinates
+        # logging.info("[Wardrive]")
+        if self.coordinates and all([
+            # avoid 0.000... measurements
+            self.coordinates["Latitude"], self.coordinates["Longitude"]
+        ]):
+            # last char is sometimes not completely drawn ¯\_(ツ)_/¯
+            # using an ending-whitespace as workaround on each line
+            ui.set("latitude", f"{self.coordinates['Latitude']:.4f} ")
+            ui.set("longitude", f"{self.coordinates['Longitude']:.4f} ")
+            ui.set("altitude", f"{self.coordinates['Altitude']:.1f}m ")
+        
         ui.set('clock', time_rn)
