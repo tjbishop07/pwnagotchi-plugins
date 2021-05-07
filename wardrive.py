@@ -63,12 +63,13 @@ class Wardrive(plugins.Plugin):
         time_rn = now.strftime(self.date_format + "\n%I:%M %p")
         # pos = self.coordinates
         # logging.info("[Wardrive]")
-        data = json.loads(self.data)
-        if data:
-            logging.info("[Wardrive] GOT DATA!")
-            for ap_data in data:
-                name = ap_data['hostname'] or ap_data['vendor'] or ap_data['mac']
-                logging.info("[Wardrive] AP - %s" % name)
+        if self.data:
+            json_data = json.loads(self.data)
+            if json_data:
+                logging.info("[Wardrive] GOT JSON!")
+                for ap_data in json_data:
+                    name = ap_data['hostname'] or ap_data['vendor'] or ap_data['mac']
+                    logging.info("[Wardrive] AP - %s" % name)
 
         if self.coordinates and all([
             # avoid 0.000... measurements
