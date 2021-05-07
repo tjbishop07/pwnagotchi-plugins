@@ -48,7 +48,7 @@ class Wardrive(plugins.Plugin):
     def on_wifi_update(self, agent, access_points):
         info = agent.session()
         self.coordinates = info["gps"]
-        logging.info("[Wardrive] wifi update called $s", access_points)
+        logging.info("[Wardrive] wifi update called $s", str(len(access_points)))
 
     def on_ui_update(self, ui):
         now = datetime.datetime.now()
