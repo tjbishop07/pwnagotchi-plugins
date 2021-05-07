@@ -14,7 +14,7 @@ class Wardrive(plugins.Plugin):
     __author__ = '@tjbishop'
     __version__ = '1.0.0'
     __license__ = 'GPL3'
-    __description__ = 'Wardriveing plugin for pwnagotchi'
+    __description__ = 'Wardriving plugin for pwnagotchi'
 
     def on_loaded(self):
         if 'date_format' in self.options:
@@ -38,7 +38,7 @@ class Wardrive(plugins.Plugin):
                     if data["main"]["plugins"]["memtemp"]["enabled"]:
                         memenable = True
                         logging.info(
-                            "Pwnagotchi Clock Plugin: memtemp is enabled")
+                            "Wardrive: memtemp is enabled")
         if ui.is_waveshare_v2():
             pos = (130, 80) if memenable else (200, 80)
             ui.add_element('clock', LabeledValue(color=BLACK, label='', value='-/-/-\n-:--',
@@ -48,4 +48,5 @@ class Wardrive(plugins.Plugin):
     def on_ui_update(self, ui):
         now = datetime.datetime.now()
         time_rn = now.strftime(self.date_format + "\n%I:%M %p")
+        
         ui.set('clock', time_rn)
