@@ -142,24 +142,6 @@ class Wardrive(plugins.Plugin):
             ),
         )
 
-    def on_wifi_update(self, agent, access_points):
-        try:
-            info = agent.session()
-            self.coordinates = info["gps"]
-            gps_filename = "wardrive.gps.json"
-
-            if self.coordinates and all([
-                # avoid 0.000... measurements
-                self.coordinates["Latitude"], self.coordinates["Longitude"]
-            ]):
-                logging.info(f"saving GPS to {gps_filename} ({self.coordinates})")
-                with open(gps_filename, "w+t") as fp:
-                    json.dump(self.coordinates, fp)
-            else:
-                logging.info("not saving GPS. Couldn't find location.")
-        except Exception():
-            logging.info("Error saving GPS location")
-
     def on_unload(self, ui):
         with ui._lock:
             ui.remove_element('latitude')
