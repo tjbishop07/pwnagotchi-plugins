@@ -48,5 +48,5 @@ class Wardrive(plugins.Plugin):
     def on_ui_update(self, ui):
         now = datetime.datetime.now()
         time_rn = now.strftime(self.date_format + "\n%I:%M %p")
-        
+        pos = self.options['position'].split(',')
         ui.set('clock', time_rn)
