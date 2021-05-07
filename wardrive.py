@@ -48,10 +48,11 @@ class Wardrive(plugins.Plugin):
     def on_wifi_update(self, agent, access_points):
         info = agent.session()
         self.coordinates = info["gps"]
+        logging.info("[Wardrive] wifi update called")
 
     def on_ui_update(self, ui):
         now = datetime.datetime.now()
         time_rn = now.strftime(self.date_format + "\n%I:%M %p")
         pos = self.coordinates
-        logging.info("[Wardrive]] (pos: %d)" % (pos))
+        logging.info("[Wardrive] pos: %s" % pos)
         ui.set('clock', time_rn)
