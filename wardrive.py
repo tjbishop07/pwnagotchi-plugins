@@ -22,7 +22,7 @@ class Wardrive(plugins.Plugin):
         self.coordinates = None
 
     def on_loaded(self):
-        logging.info(f"gps plugin loaded for {self.options['device']}")
+        logging.info(f"[Wardrive] plugin loaded for {self.options['device']}")
 
     def on_ready(self, agent):
         if os.path.exists(self.options["device"]):
@@ -143,19 +143,22 @@ class Wardrive(plugins.Plugin):
         )
 
     def on_wifi_update(self, agent, access_points):
-        info = agent.session()
-        self.coordinates = info["gps"]
-        gps_filename = filename.replace(".pcap", ".gps.json")
+        try:
+            info = agent.session()
+            self.coordinates = info["gps"]
+            gps_filename = filename.replace(".pcap", ".gps.json")
 
-        if self.coordinates and all([
-            # avoid 0.000... measurements
-            self.coordinates["Latitude"], self.coordinates["Longitude"]
-        ]):
-            logging.info(f"saving GPS to {gps_filename} ({self.coordinates})")
-            with open(gps_filename, "w+t") as fp:
-                json.dump(self.coordinates, fp)
-        else:
-            logging.info("not saving GPS. Couldn't find location.")
+            if self.coordinates and all([
+                # avoid 0.000... measurements
+                self.coordinates["Latitude"], self.coordinates["Longitude"]
+            ]):
+                logging.info(f"saving GPS to {gps_filename} ({self.coordinates})")
+                with open(gps_filename, "w+t") as fp:
+                    json.dump(self.coordinates, fp)
+            else:
+                logging.info("not saving GPS. Couldn't find location.")
+        except Exception():
+            pass
 
     def on_unload(self, ui):
         with ui._lock:
