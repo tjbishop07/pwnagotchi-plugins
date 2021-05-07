@@ -53,5 +53,5 @@ class Wardrive(plugins.Plugin):
         now = datetime.datetime.now()
         time_rn = now.strftime(self.date_format + "\n%I:%M %p")
         pos = self.coordinates
-        logging.info("Pwnagotchi [Wardrive] POS")
+        logging.info("Pwnagotchi [Wardrive] POS " + pos)
         ui.set('clock', time_rn)
