@@ -42,11 +42,11 @@ class Wardrive(plugins.Plugin):
                             "Wardrive: memtemp is enabled")
         if ui.is_waveshare_v2():
             pos = (130, 80) if memenable else (200, 80)
-            pos2 = (100, 70) if memenable else (190, 70)
+            pos2 = (90, 70) if memenable else (190, 70)
             ui.add_element('clock', LabeledValue(color=BLACK, label='', value='-/-/-\n-:--',
                                                  position=pos,
                                                  label_font=fonts.Small, text_font=fonts.Small))
-            ui.add_element('wardriver', LabeledValue(color=BLACK, label='', value='WARDRIVE ACTIVE',
+            ui.add_element('wardriver', LabeledValue(color=BLACK, label='', value='WARDRIVE ON',
                                                  position=pos2,
                                                  label_font=fonts.Small, text_font=fonts.Small))
     def on_wifi_update(self, agent, access_points):
