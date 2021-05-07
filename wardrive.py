@@ -53,6 +53,10 @@ class Wardrive(plugins.Plugin):
         info = agent.session()
         self.coordinates = info["gps"]
         ui.set("wardriver", "GOT AP LIST")
+        for network in access_points:
+            signal_strength = network['rssi']
+            channel = network['channel']
+            logging.info("Network nearby on channel %d (rssi: %d)" % (channel, signal_strength))
         # listToStr = ' '.join(map(str, access_points))
         # logging.info("[Wardrive] wifi update called $s", listToStr)
 
