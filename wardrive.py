@@ -54,6 +54,7 @@ class Wardrive(plugins.Plugin):
         self.coordinates = info["gps"]
         listToStr = ' '.join(map(str, access_points))
         logging.info("[Wardrive] wifi update called $s", listToStr)
+        ui.set("wardriver", "GOT AP LIST")
 
     def on_ui_update(self, ui):
         now = datetime.datetime.now()
