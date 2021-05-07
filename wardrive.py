@@ -55,5 +55,8 @@ class Wardrive(plugins.Plugin):
         now = datetime.datetime.now()
         time_rn = now.strftime(self.date_format + "\n%I:%M %p")
         pos = self.coordinates
-        logging.info("[Wardrive] pos: %s" % pos)
+        logging.info("[Wardrive] pos: %s" % f"{self.coordinates['Altitude']:.1f}m ")
+        ui.set("latitude", f"{self.coordinates['Latitude']:.4f} ")
+        ui.set("longitude", f"{self.coordinates['Longitude']:.4f} ")
+        ui.set("altitude", f"{self.coordinates['Altitude']:.1f}m ")
         ui.set('clock', time_rn)
