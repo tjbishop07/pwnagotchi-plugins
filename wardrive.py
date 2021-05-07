@@ -42,7 +42,7 @@ class Wardrive(plugins.Plugin):
                             "Wardrive: memtemp is enabled")
         if ui.is_waveshare_v2():
             pos = (130, 80) if memenable else (200, 80)
-            pos2 = (75, 80) if memenable else (100, 80)
+            pos2 = (130, 40) if memenable else (200, 40)
             ui.add_element('clock', LabeledValue(color=BLACK, label='', value='-/-/-\n-:--',
                                                  position=pos,
                                                  label_font=fonts.Small, text_font=fonts.Small))
