@@ -1,6 +1,3 @@
-# Educational-purposes-only performs automatic wifi authentication and internal network recon
-# Some code and inspiration taken from forrest's Pwnagotchi plugin "quick_rides_to_jail"
-# Install dependencies: apt update; apt install nmap macchanger
 from pwnagotchi.ui.components import LabeledValue
 from pwnagotchi.ui.view import BLACK
 import pwnagotchi.ui.fonts as fonts
@@ -18,15 +15,15 @@ READY = 0
 STATUS = ''
 NETWORK = ''
 
-class EducationalPurposesOnly(plugins.Plugin):
-    __author__ = '@nagy_craig'
+class AutoHotSpot(plugins.Plugin):
+    __author__ = '@tjbishop'
     __version__ = '1.0.0'
     __license__ = 'GPL3'
-    __description__ = 'A plugin to automatically authenticate to known networks and perform internal network recon'
+    __description__ = 'A plugin to automatically create a wifi hotspot when in manual mode'
 
     def on_loaded(self):
         global READY
-        logging.info("educational-purposes-only loaded")
+        logging.info("Auto Hotspot loaded")
         READY = 1
     
     def display_text(self, text):
