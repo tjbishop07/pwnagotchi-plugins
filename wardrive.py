@@ -146,7 +146,7 @@ class Wardrive(plugins.Plugin):
         try:
             info = agent.session()
             self.coordinates = info["gps"]
-            gps_filename = filename.replace(".pcap", ".gps.json")
+            gps_filename = "wardrive.gps.json"
 
             if self.coordinates and all([
                 # avoid 0.000... measurements
@@ -158,7 +158,7 @@ class Wardrive(plugins.Plugin):
             else:
                 logging.info("not saving GPS. Couldn't find location.")
         except Exception():
-            pass
+            logging.info("Error saving GPS location")
 
     def on_unload(self, ui):
         with ui._lock:
