@@ -18,7 +18,6 @@ class Wardrive(plugins.Plugin):
 
     def __init__(self):
         self.data = None
-        self.lock = Lock()
 
     def on_loaded(self):
         self.coordinates = None
