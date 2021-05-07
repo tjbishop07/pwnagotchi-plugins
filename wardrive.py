@@ -65,6 +65,7 @@ class Wardrive(plugins.Plugin):
         # logging.info("[Wardrive]")
         data = json.loads(self.data)
         if data:
+            logging.info("[Wardrive] GOT DATA!")
             for ap_data in data:
                 name = ap_data['hostname'] or ap_data['vendor'] or ap_data['mac']
                 logging.info("[Wardrive] AP - %s" % name)
