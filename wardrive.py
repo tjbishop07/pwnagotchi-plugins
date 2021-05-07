@@ -17,6 +17,7 @@ class Wardrive(plugins.Plugin):
     __description__ = 'Wardriving plugin for pwnagotchi'
 
     def on_loaded(self):
+        self.coordinates = None
         if 'date_format' in self.options:
             self.date_format = self.options['date_format']
         else:
@@ -44,9 +45,12 @@ class Wardrive(plugins.Plugin):
             ui.add_element('clock', LabeledValue(color=BLACK, label='', value='-/-/-\n-:--',
                                                  position=pos,
                                                  label_font=fonts.Small, text_font=fonts.Small))
+    def on_wifi_update(self, agent, access_points):
+        info = agent.session()
+        self.coordinates = info["gps"]
 
     def on_ui_update(self, ui):
         now = datetime.datetime.now()
         time_rn = now.strftime(self.date_format + "\n%I:%M %p")
-        pos = self.options['position'].split(',')
+        pos = self.coordinates
         ui.set('clock', time_rn)
