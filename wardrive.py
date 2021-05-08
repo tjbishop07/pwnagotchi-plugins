@@ -10,6 +10,7 @@ import toml
 import yaml
 import json
 from threading import Lock
+import subprocess
 
 
 class Wardrive(plugins.Plugin):
@@ -85,9 +86,9 @@ class Wardrive(plugins.Plugin):
                 with open("/root/custom_plugins/wardrive.json", 'w+t') as fp:
                     json.dump(geo_json, fp)
 
-    # def on_internet_available(self, agent):
-    #     logging.info("LOOT: %s" % self.geo_data)
-    #     ui.set('wardriver', 'Parse Loot')
+    def on_internet_available(self, agent):
+        subprocess.Popen('rlclone wardrive.json Gdrive:', shell=True, stdin=None, stdout=open("/dev/null", "w"), stderr=None, executable="/bin/bash")
+        logging.info("Pwnagotchi [Wardrive] Sync complete")
 
     def on_ui_update(self, ui):
         now = datetime.datetime.now()
