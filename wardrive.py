@@ -76,8 +76,8 @@ class Wardrive(plugins.Plugin):
                             "coordinates": [self.coordinates["Longitude"], self.coordinates["Latitude"]]
                         },
                         "properties": {
-                            "title": ap_data['hostname']
-                            #"ap_data": ap_data
+                            "title": ap_data['hostname'],
+                            "ap_data": ap_data
                         }
                     })
                     self.last_seen_ap = ap_data['hostname'] or ap_data['vendor'] or ap_data['mac']
