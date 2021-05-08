@@ -59,6 +59,8 @@ class Wardrive(plugins.Plugin):
 
     def on_unfiltered_ap_list(self, agent, data):
         with self.lock:
+            info = agent.session()
+            self.coordinates = info["gps"]
             data = sorted(data, key=lambda k: k['mac'])
             self.data = json.dumps(data)
 
