@@ -88,4 +88,4 @@ class Wardrive(plugins.Plugin):
         ui.set('clock', time_rn)
         
         if self.last_seen_ap:
-            ui.set('wardrive', self.last_seen_ap)
+            ui.set('wardriver', self.last_seen_ap)
