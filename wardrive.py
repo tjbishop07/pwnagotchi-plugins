@@ -64,7 +64,7 @@ class Wardrive(plugins.Plugin):
             data = sorted(data, key=lambda k: k['mac'])
             self.data = json.dumps(data)
             json_data = json.loads(self.data)
-            geo_json = [];
+            geo_json = []
             if json_data:
                 for ap_data in json_data:
                     # geo_json.append({"ap_data": ap_data, "geo_data": self.coordinates})
@@ -72,14 +72,23 @@ class Wardrive(plugins.Plugin):
                         "type": "Feature",
                         "geometry": {
                             "type": "Point",
-                            "coordinates": [self.coordinates["Latitude"], self.coordinates["Longitude"]]
+                            "coordinates": [self.coordinates["Longitude"], self.coordinates["Latitude"]]
                         },
-                        "properties": ap_data
+                        "properties": {
+                            "title": ap_data['hostname'] or ap_data['vendor'] or ap_data['mac'],
+                            "ap_data": ap_data
+                        }
                     })
                     self.last_seen_ap = ap_data['hostname'] or ap_data['vendor'] or ap_data['mac']
-                self.geo_data = json.dumps(geo_json)
+                    self.geo_data = json.dumps({
+                        "type": "FeatureCollection",
+                        "features": geo_json
+                    })
                 with open("/root/custom_plugins/wardrive.json", 'w+t') as fp:
-                    json.dump(geo_json, fp)
+                    json.dumps({
+                        "type": "FeatureCollection",
+                        "features": geo_json
+                    }, fp)
 
     # def on_internet_available(self, agent):
     #     logging.info("LOOT: %s" % self.geo_data)
