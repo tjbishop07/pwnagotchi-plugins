@@ -20,7 +20,7 @@ class Wardrive(plugins.Plugin):
     def __init__(self):
         self.data = None
         self.geo_data = None
-        self.last_seen_ap = 'Loading'
+        self.last_seen_ap = '---'
         self.lock = Lock()
 
     def on_loaded(self):
@@ -64,9 +64,9 @@ class Wardrive(plugins.Plugin):
             data = sorted(data, key=lambda k: k['mac'])
             self.data = json.dumps(data)
 
-    def on_internet_available(self, agent):
-        logging.info("LOOT: %s" % self.geo_data)
-        ui.set('wardriver', 'Parse Loot')
+    # def on_internet_available(self, agent):
+    #     logging.info("LOOT: %s" % self.geo_data)
+    #     ui.set('wardriver', 'Parse Loot')
 
     def on_ui_update(self, ui):
         now = datetime.datetime.now()
@@ -79,6 +79,8 @@ class Wardrive(plugins.Plugin):
                     geo_json.append({"ap_data": ap_data, "geo_data": self.coordinates})
                     self.last_seen_ap = ap_data['hostname'] or ap_data['vendor'] or ap_data['mac']
                 self.geo_data = json.dumps(geo_json)
+                with open(os.path.join(self.config['bettercap']['handshakes'], 'wardrivn_geo.json'), 'w+t') as f:
+                    f.write(self.geo_data)
 
         if self.coordinates and all([
             # avoid 0.000... measurements
