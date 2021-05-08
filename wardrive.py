@@ -73,7 +73,7 @@ class Wardrive(plugins.Plugin):
                             "coordinates": [self.coordinates["Longitude"], self.coordinates["Latitude"]]
                         },
                         "properties": {
-                            "title": ap_data['hostname'] or ap_data['vendor'] or ap_data['mac'],
+                            "title": ap_data['hostname'],
                             "ap_data": ap_data
                         }
                     })
