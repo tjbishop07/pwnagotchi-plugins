@@ -87,8 +87,12 @@ class Wardrive(plugins.Plugin):
                     json.dump(geo_json, fp)
 
     def on_internet_available(self, agent):
-        subprocess.Popen('rclone copy wardrive.json Gdrive:', shell=True, stdin=None, stdout=open("/dev/null", "w"), stderr=None, executable="/bin/bash")
-        logging.info("Pwnagotchi [Wardrive] Sync complete")
+        if self.coordinates and all([
+            # avoid 0.000... measurements
+            self.coordinates["Latitude"], self.coordinates["Longitude"]
+        ]):
+            subprocess.Popen('rclone copy wardrive.json Gdrive:', shell=True, stdin=None, stdout=open("/dev/null", "w"), stderr=None, executable="/bin/bash")
+            logging.info("Pwnagotchi [Wardrive] Sync complete")
 
     def on_ui_update(self, ui):
         now = datetime.datetime.now()
