@@ -74,7 +74,10 @@ class Wardrive(plugins.Plugin):
                             "type": "Point",
                             "coordinates": [self.coordinates["Longitude"], self.coordinates["Latitude"]]
                         },
-                        "properties": ap_data
+                        "properties": {
+                            "title": ap_data['hostname']
+                            #"ap_data": ap_data
+                        }
                     })
                     self.last_seen_ap = ap_data['hostname'] or ap_data['vendor'] or ap_data['mac']
                 geo_json = {"type": "FeatureCollection",
