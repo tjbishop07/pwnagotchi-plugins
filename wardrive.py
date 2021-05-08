@@ -63,15 +63,6 @@ class Wardrive(plugins.Plugin):
             self.coordinates = info["gps"]
             data = sorted(data, key=lambda k: k['mac'])
             self.data = json.dumps(data)
-
-    # def on_internet_available(self, agent):
-    #     logging.info("LOOT: %s" % self.geo_data)
-    #     ui.set('wardriver', 'Parse Loot')
-
-    def on_ui_update(self, ui):
-        now = datetime.datetime.now()
-        time_rn = now.strftime(self.date_format + "\n%I:%M %p")
-        if self.data:
             json_data = json.loads(self.data)
             geo_json = [];
             if json_data:
@@ -81,6 +72,14 @@ class Wardrive(plugins.Plugin):
                 self.geo_data = json.dumps(geo_json)
                 with open("/root/custom_plugins/wardrive.json", 'w+t') as fp:
                     json.dump(geo_json, fp)
+
+    # def on_internet_available(self, agent):
+    #     logging.info("LOOT: %s" % self.geo_data)
+    #     ui.set('wardriver', 'Parse Loot')
+
+    def on_ui_update(self, ui):
+        now = datetime.datetime.now()
+        time_rn = now.strftime(self.date_format + "\n%I:%M %p")
 
         if self.coordinates and all([
             # avoid 0.000... measurements
