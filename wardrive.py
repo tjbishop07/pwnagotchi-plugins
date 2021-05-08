@@ -19,7 +19,8 @@ class Wardrive(plugins.Plugin):
 
     def __init__(self):
         self.data = None
-        self.last_seen_ap = 'Wardrivn'
+        self.geo_data = None
+        self.last_seen_ap = 'Loading'
         self.lock = Lock()
 
     def on_loaded(self):
@@ -47,7 +48,7 @@ class Wardrive(plugins.Plugin):
                         logging.info(
                             "Wardrive: memtemp is enabled")
         if ui.is_waveshare_v2():
-            pos = (130, 80) if memenable else (200, 80)
+            pos = (130, 85) if memenable else (200, 85)
             pos2 = (70, 70) if memenable else (195, 70)
             ui.add_element('clock', LabeledValue(color=BLACK, label='', value='-/-/-\n-:--',
                                                  position=pos,
@@ -68,10 +69,13 @@ class Wardrive(plugins.Plugin):
         # logging.info("[Wardrive]")
         if self.data:
             json_data = json.loads(self.data)
+            geo_json = [];
             if json_data:
                 logging.info("[Wardrive] GOT JSON!")
                 for ap_data in json_data:
+                    geo_json.push('{%s}' % ap_data['hostname'])
                     self.last_seen_ap = ap_data['hostname'] or ap_data['vendor'] or ap_data['mac']
+                self.geo_data = json.dumps(geo_json)
 
         if self.coordinates and all([
             # avoid 0.000... measurements
