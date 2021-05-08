@@ -5,7 +5,6 @@ import pwnagotchi.plugins as plugins
 import pwnagotchi
 import logging
 import datetime
-import os
 import toml
 import yaml
 import json
@@ -68,7 +67,6 @@ class Wardrive(plugins.Plugin):
             geo_json_array = []
             if json_data:
                 for ap_data in json_data:
-                    # geo_json.append({"ap_data": ap_data, "geo_data": self.coordinates})
                     geo_json_array.append({
                         "type": "Feature",
                         "geometry": {
@@ -88,10 +86,8 @@ class Wardrive(plugins.Plugin):
 
     def on_internet_available(self, agent):
         if self.coordinates and all([
-            # avoid 0.000... measurements
             self.coordinates["Latitude"], self.coordinates["Longitude"]
         ]):
-            #subprocess.Popen('rclone copy wardrive.json Gdrive:', shell=True, stdin=None, stdout=open("/dev/null", "w"), stderr=None, executable="/bin/bash")
             subprocess.call(['rclone', 'copy', '/root/custom_plugins/wardrive.json', 'Gdrive:'])
             logging.info("Pwnagotchi [Wardrive] Sync complete")
 
@@ -100,11 +96,8 @@ class Wardrive(plugins.Plugin):
         time_rn = now.strftime(self.date_format + "\n%I:%M %p")
 
         if self.coordinates and all([
-            # avoid 0.000... measurements
             self.coordinates["Latitude"], self.coordinates["Longitude"]
         ]):
-            # last char is sometimes not completely drawn ¯\_(ツ)_/¯
-            # using an ending-whitespace as workaround on each line
             ui.set("latitude", f"{self.coordinates['Latitude']:.4f} ")
             ui.set("longitude", f"{self.coordinates['Longitude']:.4f} ")
             ui.set("altitude", f"{self.coordinates['Altitude']:.1f}m ")
