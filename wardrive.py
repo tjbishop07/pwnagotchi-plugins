@@ -65,11 +65,8 @@ class Wardrive(plugins.Plugin):
             self.data = json.dumps(data)
 
     def on_internet_available(self, agent):
-        if not self.ready or self.lock.locked():
-            return
-
-        with self.lock:
-            logging.info("%s" % self.geo_data)
+        logging.info("%s" % self.geo_data)
+        ui.set('wardriver', 'Parse Loot')
 
     def on_ui_update(self, ui):
         now = datetime.datetime.now()
@@ -78,7 +75,6 @@ class Wardrive(plugins.Plugin):
             json_data = json.loads(self.data)
             geo_json = [];
             if json_data:
-                logging.info("[Wardrive] GOT JSON!")
                 for ap_data in json_data:
                     geo_json.append({"ap_data": ap_data, "geo_data": self.coordinates})
                     self.last_seen_ap = ap_data['hostname'] or ap_data['vendor'] or ap_data['mac']
