@@ -67,7 +67,15 @@ class Wardrive(plugins.Plugin):
             geo_json = [];
             if json_data:
                 for ap_data in json_data:
-                    geo_json.append({"ap_data": ap_data, "geo_data": self.coordinates})
+                    # geo_json.append({"ap_data": ap_data, "geo_data": self.coordinates})
+                    geo_json.append({
+                        "type": "Feature",
+                        "geometry": {
+                            "type": "Point",
+                            "coordinates": [self.coordinates["Latitude"], self.coordinates["Longitude"]]
+                        },
+                        "properties": ap_data
+                    })
                     self.last_seen_ap = ap_data['hostname'] or ap_data['vendor'] or ap_data['mac']
                 self.geo_data = json.dumps(geo_json)
                 with open("/root/custom_plugins/wardrive.json", 'w+t') as fp:
