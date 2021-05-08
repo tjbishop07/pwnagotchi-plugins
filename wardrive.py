@@ -79,7 +79,7 @@ class Wardrive(plugins.Plugin):
                     geo_json.append({"ap_data": ap_data, "geo_data": self.coordinates})
                     self.last_seen_ap = ap_data['hostname'] or ap_data['vendor'] or ap_data['mac']
                 self.geo_data = json.dumps(geo_json)
-                with open("wardrive.json", 'w+t') as fp:
+                with open("/root/custom_plugins/wardrive.json", 'w+t') as fp:
                     json.dump(geo_json, fp)
 
         if self.coordinates and all([
