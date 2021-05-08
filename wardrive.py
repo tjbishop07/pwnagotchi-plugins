@@ -19,7 +19,6 @@ class Wardrive(plugins.Plugin):
 
     def __init__(self):
         self.data = None
-        self.geo_data = None
         self.last_seen_ap = '---'
         self.lock = Lock()
 
@@ -67,7 +66,6 @@ class Wardrive(plugins.Plugin):
             geo_json = []
             if json_data:
                 for ap_data in json_data:
-                    # geo_json.append({"ap_data": ap_data, "geo_data": self.coordinates})
                     geo_json.append({
                         "type": "Feature",
                         "geometry": {
@@ -80,14 +78,11 @@ class Wardrive(plugins.Plugin):
                         }
                     })
                     self.last_seen_ap = ap_data['hostname'] or ap_data['vendor'] or ap_data['mac']
-                    self.geo_data = json.dumps({
-                        "type": "FeatureCollection",
-                        "features": geo_json
-                    })
+
                 with open("/root/custom_plugins/wardrive.json", 'w+t') as fp:
                     json.dumps({
                         "type": "FeatureCollection",
-                        "features": geo_json
+                        "features": [geo_json]
                     }, fp)
 
     # def on_internet_available(self, agent):
