@@ -65,7 +65,7 @@ class Wardrive(plugins.Plugin):
             self.data = json.dumps(data)
 
     def on_internet_available(self, agent):
-        logging.info("%s" % self.geo_data)
+        logging.info("LOOT: %s" % self.geo_data)
         ui.set('wardriver', 'Parse Loot')
 
     def on_ui_update(self, ui):
