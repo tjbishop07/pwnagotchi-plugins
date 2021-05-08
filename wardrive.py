@@ -76,7 +76,7 @@ class Wardrive(plugins.Plugin):
                     geo_json.append('{%s}' % ap_data['hostname'])
                     self.last_seen_ap = ap_data['hostname'] or ap_data['vendor'] or ap_data['mac']
                 self.geo_data = json.dumps(geo_json)
-                loggin.info("%s" % self.geo_data)
+                logging.info("%s" % self.geo_data)
 
         if self.coordinates and all([
             # avoid 0.000... measurements
