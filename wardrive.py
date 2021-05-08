@@ -75,7 +75,7 @@ class Wardrive(plugins.Plugin):
             if json_data:
                 logging.info("[Wardrive] GOT JSON!")
                 for ap_data in json_data:
-                    geo_json.append(json.dumps({"hostname": ap_data['hostname'], "lat_lng": self.coordinates}))
+                    geo_json.append(json.dumps({"ap_data": ap_data, "geo_data": self.coordinates}))
                     self.last_seen_ap = ap_data['hostname'] or ap_data['vendor'] or ap_data['mac']
                 self.geo_data = json.dumps(geo_json)
                 logging.info("%s" % self.geo_data)
