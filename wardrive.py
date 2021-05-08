@@ -80,10 +80,7 @@ class Wardrive(plugins.Plugin):
                     self.last_seen_ap = ap_data['hostname'] or ap_data['vendor'] or ap_data['mac']
 
                 with open("/root/custom_plugins/wardrive.json", 'w+t') as fp:
-                    json.dumps({
-                        "type": "FeatureCollection",
-                        "features": [geo_json]
-                    }, fp)
+                    json.dumps(geo_json, fp)
 
     # def on_internet_available(self, agent):
     #     logging.info("LOOT: %s" % self.geo_data)
