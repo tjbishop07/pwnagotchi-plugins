@@ -11,6 +11,7 @@ import yaml
 import json
 from threading import Lock
 
+
 class Wardrive(plugins.Plugin):
     __author__ = '@tjbishop'
     __version__ = '1.0.0'
@@ -54,8 +55,8 @@ class Wardrive(plugins.Plugin):
                                                  position=pos,
                                                  label_font=fonts.Small, text_font=fonts.Small))
             ui.add_element('wardriver', LabeledValue(color=BLACK, label='', value='WARDRIV\'N',
-                                                 position=pos2,
-                                                 label_font=fonts.Small, text_font=fonts.Small))
+                                                     position=pos2,
+                                                     label_font=fonts.Small, text_font=fonts.Small))
 
     def on_unfiltered_ap_list(self, agent, data):
         with self.lock:
@@ -78,7 +79,8 @@ class Wardrive(plugins.Plugin):
                     })
                     self.last_seen_ap = ap_data['hostname'] or ap_data['vendor'] or ap_data['mac']
                 self.geo_data = json.dumps(geo_json_array)
-                geo_json = {"type": "FeatureCollection", "features": [json.dumps(geo_json_array)]}
+                geo_json = {"type": "FeatureCollection",
+                            "features": geo_json_array}
                 with open("/root/custom_plugins/wardrive.json", 'w+t') as fp:
                     json.dump(geo_json, fp)
 
@@ -99,6 +101,6 @@ class Wardrive(plugins.Plugin):
             ui.set("latitude", f"{self.coordinates['Latitude']:.4f} ")
             ui.set("longitude", f"{self.coordinates['Longitude']:.4f} ")
             ui.set("altitude", f"{self.coordinates['Altitude']:.1f}m ")
-        
+
         ui.set('clock', time_rn)
         ui.set('wardriver', self.last_seen_ap)
