@@ -19,7 +19,7 @@ class Wardrive(plugins.Plugin):
 
     def __init__(self):
         self.data = None
-        self.last_seen_ap = None
+        self.last_seen_ap = 'Wardrivn'
         self.lock = Lock()
 
     def on_loaded(self):
@@ -71,9 +71,7 @@ class Wardrive(plugins.Plugin):
             if json_data:
                 logging.info("[Wardrive] GOT JSON!")
                 for ap_data in json_data:
-                    name = ap_data['hostname'] or ap_data['vendor'] or ap_data['mac']
-                    logging.info("[Wardrive] AP - %s" % name)
-                    self.last_seen_ap = name
+                    self.last_seen_ap = ap_data['hostname'] or ap_data['vendor'] or ap_data['mac']
 
         if self.coordinates and all([
             # avoid 0.000... measurements
@@ -86,6 +84,4 @@ class Wardrive(plugins.Plugin):
             ui.set("altitude", f"{self.coordinates['Altitude']:.1f}m ")
         
         ui.set('clock', time_rn)
-        
-        if self.last_seen_ap:
-            ui.set('wardriver', self.last_seen_ap)
+        ui.set('wardriver', self.last_seen_ap)
