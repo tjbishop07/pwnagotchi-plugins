@@ -9,6 +9,7 @@ import os
 import toml
 import yaml
 import json
+from threading import Lock
 
 class Wardrive(plugins.Plugin):
     __author__ = '@tjbishop'
@@ -19,6 +20,7 @@ class Wardrive(plugins.Plugin):
     def __init__(self):
         self.data = None
         self.last_seen_ap = None
+        self.lock = Lock()
 
     def on_loaded(self):
         self.coordinates = None
