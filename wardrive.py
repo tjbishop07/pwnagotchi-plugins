@@ -20,7 +20,6 @@ class Wardrive(plugins.Plugin):
 
     def __init__(self):
         self.data = None
-        self.geo_data = None
         self.last_seen_ap = '---'
         self.lock = Lock()
 
@@ -78,7 +77,6 @@ class Wardrive(plugins.Plugin):
                         "properties": ap_data
                     })
                     self.last_seen_ap = ap_data['hostname'] or ap_data['vendor'] or ap_data['mac']
-                self.geo_data = json.dumps(geo_json_array)
                 geo_json = {"type": "FeatureCollection",
                             "features": geo_json_array}
                 with open("/root/custom_plugins/wardrive.json", 'w+t') as fp:
